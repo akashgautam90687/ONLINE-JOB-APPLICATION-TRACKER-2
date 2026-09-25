@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recruiter Dashboard - Job Tracker</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #111827;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #111827;
+            color: white;
+            height: 84px;
+            padding: 0 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar h2 {
+            font-size: 30px;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+
+            padding: 12px 22px;
+            border-radius: 8px;
+
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main {
+            padding: 50px 26px;
+        }
+
+
+        /* ================= WELCOME ================= */
+
+        .welcome h1 {
+            font-size: 40px;
+            color: #000;
+            margin-bottom: 3px;
+        }
+
+        .welcome p {
+            font-size: 19px;
+            color: #111;
+        }
+
+
+        /* ================= DASHBOARD CARDS ================= */
+
+        .dashboard-cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(220px, 1fr));
+
+            gap: 24px;
+
+            margin-top: 40px;
+        }
+
+
+        .card {
+
+            background: white;
+
+            min-height: 200px;
+
+            padding: 32px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 7px 20px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .card h2 {
+
+            font-size: 29px;
+
+            margin-bottom: 14px;
+
+            color: #000;
+        }
+
+
+        .card p {
+
+            font-size: 17px;
+
+            margin-bottom: 25px;
+
+            color: #222;
+        }
+
+
+        .card-btn {
+
+            background: #111827;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            cursor: pointer;
+        }
+
+
+        .card-btn:hover {
+
+            background: #2563eb;
+
+        }
+
+
+        /* ================= SECTIONS ================= */
+
+        .page-section {
+
+            display: none;
+
+            background: white;
+
+            margin-top: 40px;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 7px 20px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .page-section.active {
+
+            display: block;
+
+        }
+
+
+        .page-section h2 {
+
+            font-size: 32px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* ================= BACK BUTTON ================= */
+
+        .back-btn {
+
+            background: #6b7280;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 18px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .back-btn:hover {
+
+            background: #4b5563;
+
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-container {
+
+            max-width: 800px;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            font-size: 15px;
+
+        }
+
+
+        .form-group input,
+
+        .form-group select,
+
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+
+        }
+
+
+        .form-group input:focus,
+
+        .form-group select:focus,
+
+        .form-group textarea:focus {
+
+            border-color: #2563eb;
+
+        }
+
+
+        .form-group textarea {
+
+            height: 120px;
+
+            resize: vertical;
+
+        }
+
+
+        .submit-btn {
+
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px 25px;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+        }
+
+
+        .submit-btn:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+
+            margin-top: 15px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* ================= JOB CARD ================= */
+
+        .job-card {
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            padding: 22px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .job-card h3 {
+
+            font-size: 22px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .job-card p {
+
+            margin: 7px 0;
+
+            color: #444;
+
+        }
+
+
+        .delete-btn {
+
+            background: #ef4444;
+
+            color: white;
+
+            border: none;
+
+            padding: 9px 15px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            margin-top: 12px;
+
+        }
+
+
+        .delete-btn:hover {
+
+            background: #dc2626;
+
+        }
+
+
+        /* ================= CANDIDATE ================= */
+
+        .candidate-card {
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            padding: 22px;
+
+            margin-bottom: 18px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        .candidate-info h3 {
+
+            font-size: 21px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .candidate-info p {
+
+            margin: 5px 0;
+
+            color: #555;
+
+        }
+
+
+        .profile-btn {
+
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 16px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+        }
+
+
+        .profile-btn:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* ================= EMPTY STATE ================= */
+
+        .empty {
+
+            padding: 25px;
+
+            border: 1px dashed #cbd5e1;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            color: #6b7280;
+
+        }
+
+
+        /* ================= COMPANY ================= */
+
+        .company-container {
+
+            max-width: 800px;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .dashboard-cards {
+
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding: 0 18px;
+
+            }
+
+            .navbar h2 {
+
+                font-size: 21px;
+
+            }
+
+            .main {
+
+                padding: 30px 18px;
+
+            }
+
+            .welcome h1 {
+
+                font-size: 30px;
+
+            }
+
+            .dashboard-cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .candidate-card {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <h2>Recruiter Dashboard</h2>
+
+    <button
+        class="logout-btn"
+        id="logoutBtn"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- WELCOME -->
+
+    <div class="welcome">
+
+        <h1>
+            Welcome, Recruiter 👋
+        </h1>
+
+        <p>
+            Manage your jobs and candidates from here.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         DASHBOARD CARDS
+    ================================================== -->
+
+    <div
+        class="dashboard-cards"
+        id="dashboardCards"
+    >
+
+
+        <!-- POST JOB -->
+
+        <div class="card">
+
+            <h2>➕ Post Job</h2>
+
+            <p>
+                Create a new job vacancy.
+            </p>
+
+            <button
+                class="card-btn"
+                id="postJobBtn"
+            >
+                Post New Job
+            </button>
+
+        </div>
+
+
+        <!-- MY JOBS -->
+
+        <div class="card">
+
+            <h2>💼 My Jobs</h2>
+
+            <p>
+                Manage your posted jobs.
+            </p>
+
+            <button
+                class="card-btn"
+                id="myJobsBtn"
+            >
+                View Jobs
+            </button>
+
+        </div>
+
+
+        <!-- CANDIDATES -->
+
+        <div class="card">
+
+            <h2>👥 Candidates</h2>
+
+            <p>
+                View candidates who applied.
+            </p>
+
+            <button
+                class="card-btn"
+                id="candidatesBtn"
+            >
+                View Candidates
+            </button>
+
+        </div>
+
+
+        <!-- COMPANY -->
+
+        <div class="card">
+
+            <h2>🏢 Company Profile</h2>
+
+            <p>
+                Manage your company information.
+            </p>
+
+            <button
+                class="card-btn"
+                id="companyBtn"
+            >
+                My Company
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         POST JOB PAGE
+    ================================================== -->
+
+    <section
+        class="page-section"
+        id="postJobSection"
+    >
+
+        <button
+            class="back-btn"
+            id="backFromPost"
+        >
+            ← Back to Dashboard
+        </button>
+
+
+        <h2>
+            Post a New Job
+        </h2>
+
+
+        <div class="form-container">
+
+            <form id="jobForm">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Job Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="jobTitle"
+                        placeholder="e.g. Frontend Developer"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Company Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="jobCompany"
+                        placeholder="Enter company name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="jobLocation"
+                        placeholder="e.g. Hyderabad"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Job Type
+                    </label>
+
+                    <select
+                        id="jobType"
+                        required
+                    >
+
+                        <option value="">
+                            Select Job Type
+                        </option>
+
+                        <option value="Full Time">
+                            Full Time
+                        </option>
+
+                        <option value="Part Time">
+                            Part Time
+                        </option>
+
+                        <option value="Internship">
+                            Internship
+                        </option>
+
+                        <option value="Remote">
+                            Remote
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Salary
+                    </label>
+
+                    <input
+                        type="text"
+                        id="jobSalary"
+                        placeholder="e.g. ₹6 - ₹10 LPA"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Required Skills
+                    </label>
+
+                    <input
+                        type="text"
+                        id="jobSkills"
+                        placeholder="e.g. HTML, CSS, JavaScript"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Job Description
+                    </label>
+
+                    <textarea
+                        id="jobDescription"
+                        placeholder="Write job description..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    class="submit-btn"
+                    type="submit"
+                >
+                    Publish Job
+                </button>
+
+
+            </form>
+
+
+            <p
+                class="message"
+                id="jobMessage"
+            ></p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         MY JOBS PAGE
+    ================================================== -->
+
+    <section
+        class="page-section"
+        id="myJobsSection"
+    >
+
+        <button
+            class="back-btn"
+            id="backFromJobs"
+        >
+            ← Back to Dashboard
+        </button>
+
+
+        <h2>
+            💼 My Posted Jobs
+        </h2>
+
+
+        <div id="jobsList"></div>
+
+    </section>
+
+
+    <!-- =================================================
+         CANDIDATES PAGE
+    ================================================== -->
+
+    <section
+        class="page-section"
+        id="candidatesSection"
+    >
+
+        <button
+            class="back-btn"
+            id="backFromCandidates"
+        >
+            ← Back to Dashboard
+        </button>
+
+
+        <h2>
+            👥 Candidates
+        </h2>
+
+
+        <div id="candidatesList">
+
+
+            <!-- Candidate 1 -->
+
+            <div class="candidate-card">
+
+                <div class="candidate-info">
+
+                    <h3>
+                        Rahul Sharma
+                    </h3>
+
+                    <p>
+                        📧 rahul@gmail.com
+                    </p>
+
+                    <p>
+                        💻 Java Developer
+                    </p>
+
+                    <p>
+                        🎓 B.Tech CSE
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="profile-btn"
+                    data-name="Rahul Sharma"
+                    data-email="rahul@gmail.com"
+                    data-role="Java Developer"
+                >
+                    View Profile
+                </button>
+
+            </div>
+
+
+            <!-- Candidate 2 -->
+
+            <div class="candidate-card">
+
+                <div class="candidate-info">
+
+                    <h3>
+                        Priya Singh
+                    </h3>
+
+                    <p>
+                        📧 priya@gmail.com
+                    </p>
+
+                    <p>
+                        💻 Frontend Developer
+                    </p>
+
+                    <p>
+                        🎓 B.Tech CSE
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="profile-btn"
+                    data-name="Priya Singh"
+                    data-email="priya@gmail.com"
+                    data-role="Frontend Developer"
+                >
+                    View Profile
+                </button>
+
+            </div>
+
+
+            <!-- Candidate 3 -->
+
+            <div class="candidate-card">
+
+                <div class="candidate-info">
+
+                    <h3>
+                        Aman Kumar
+                    </h3>
+
+                    <p>
+                        📧 aman@gmail.com
+                    </p>
+
+                    <p>
+                        💻 Backend Developer
+                    </p>
+
+                    <p>
+                        🎓 B.Tech IT
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="profile-btn"
+                    data-name="Aman Kumar"
+                    data-email="aman@gmail.com"
+                    data-role="Backend Developer"
+                >
+                    View Profile
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         COMPANY PROFILE PAGE
+    ================================================== -->
+
+    <section
+        class="page-section"
+        id="companySection"
+    >
+
+        <button
+            class="back-btn"
+            id="backFromCompany"
+        >
+            ← Back to Dashboard
+        </button>
+
+
+        <h2>
+            🏢 Company Profile
+        </h2>
+
+
+        <div class="company-container">
+
+            <form id="companyForm">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Company Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="companyName"
+                        placeholder="Enter company name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Company Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="companyEmail"
+                        placeholder="company@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="companyPhone"
+                        placeholder="Enter phone number"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Company Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="companyLocation"
+                        placeholder="e.g. Hyderabad"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Website
+                    </label>
+
+                    <input
+                        type="text"
+                        id="companyWebsite"
+                        placeholder="www.company.com"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        About Company
+                    </label>
+
+                    <textarea
+                        id="companyAbout"
+                        placeholder="Tell us about your company..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    class="submit-btn"
+                    type="submit"
+                >
+                    Save Company Profile
+                </button>
+
+
+            </form>
+
+
+            <p
+                class="message"
+                id="companyMessage"
+            ></p>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   LOGIN PROTECTION
+===================================================== */
+
+const loggedIn =
+    localStorage.getItem("loggedIn");
+
+const userRole =
+    localStorage.getItem("userRole");
+
+
+if (
+    loggedIn !== "true" ||
+    userRole !== "recruiter"
+) {
+
+    window.location.href = "login.html";
+
+}
+
+
+/* =====================================================
+   GET ELEMENTS
+===================================================== */
+
+const dashboardCards =
+    document.getElementById("dashboardCards");
+
+const postJobSection =
+    document.getElementById("postJobSection");
+
+const myJobsSection =
+    document.getElementById("myJobsSection");
+
+const candidatesSection =
+    document.getElementById("candidatesSection");
+
+const companySection =
+    document.getElementById("companySection");
+
+
+/* =====================================================
+   HIDE ALL PAGES
+===================================================== */
+
+function hideAllSections() {
+
+    postJobSection.classList.remove("active");
+
+    myJobsSection.classList.remove("active");
+
+    candidatesSection.classList.remove("active");
+
+    companySection.classList.remove("active");
+
+}
+
+
+/* =====================================================
+   SHOW DASHBOARD
+===================================================== */
+
+function showDashboard() {
+
+    hideAllSections();
+
+    dashboardCards.style.display = "grid";
+
+}
+
+
+/* =====================================================
+   POST JOB BUTTON
+===================================================== */
+
+document
+    .getElementById("postJobBtn")
+    .addEventListener("click", function() {
+
+        dashboardCards.style.display = "none";
+
+        hideAllSections();
+
+        postJobSection.classList.add("active");
+
+    });
+
+
+/* =====================================================
+   MY JOBS BUTTON
+===================================================== */
+
+document
+    .getElementById("myJobsBtn")
+    .addEventListener("click", function() {
+
+        dashboardCards.style.display = "none";
+
+        hideAllSections();
+
+        myJobsSection.classList.add("active");
+
+        loadJobs();
+
+    });
+
+
+/* =====================================================
+   CANDIDATES BUTTON
+===================================================== */
+
+document
+    .getElementById("candidatesBtn")
+    .addEventListener("click", function() {
+
+        dashboardCards.style.display = "none";
+
+        hideAllSections();
+
+        candidatesSection.classList.add("active");
+
+    });
+
+
+/* =====================================================
+   COMPANY BUTTON
+===================================================== */
+
+document
+    .getElementById("companyBtn")
+    .addEventListener("click", function() {
+
+        dashboardCards.style.display = "none";
+
+        hideAllSections();
+
+        companySection.classList.add("active");
+
+        loadCompany();
+
+    });
+
+
+/* =====================================================
+   BACK BUTTONS
+===================================================== */
+
+document
+    .getElementById("backFromPost")
+    .addEventListener("click", showDashboard);
+
+
+document
+    .getElementById("backFromJobs")
+    .addEventListener("click", showDashboard);
+
+
+document
+    .getElementById("backFromCandidates")
+    .addEventListener("click", showDashboard);
+
+
+document
+    .getElementById("backFromCompany")
+    .addEventListener("click", showDashboard);
+
+
+/* =====================================================
+   POST JOB
+===================================================== */
+
+document
+    .getElementById("jobForm")
+    .addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+
+        const job = {
+
+            title:
+                document.getElementById(
+                    "jobTitle"
+                ).value,
+
+            company:
+                document.getElementById(
+                    "jobCompany"
+                ).value,
+
+            location:
+                document.getElementById(
+                    "jobLocation"
+                ).value,
+
+            type:
+                document.getElementById(
+                    "jobType"
+                ).value,
+
+            salary:
+                document.getElementById(
+                    "jobSalary"
+                ).value,
+
+            skills:
+                document.getElementById(
+                    "jobSkills"
+                ).value,
+
+            description:
+                document.getElementById(
+                    "jobDescription"
+                ).value
+
+        };
+
+
+        let jobs =
+            JSON.parse(
+                localStorage.getItem(
+                    "recruiterJobs"
+                )
+            ) || [];
+
+
+        jobs.push(job);
+
+
+        localStorage.setItem(
+            "recruiterJobs",
+            JSON.stringify(jobs)
+        );
+
+
+        document.getElementById(
+            "jobMessage"
+        ).innerText =
+            "✅ Job published successfully!";
+
+
+        document.getElementById(
+            "jobMessage"
+        ).style.color =
+            "green";
+
+
+        document
+            .getElementById("jobForm")
+            .reset();
+
+
+        /* Automatically open My Jobs */
+
+        setTimeout(function() {
+
+            dashboardCards.style.display =
+                "none";
+
+            hideAllSections();
+
+            myJobsSection.classList.add(
+                "active"
+            );
+
+            loadJobs();
+
+        }, 800);
+
+    });
+
+
+/* =====================================================
+   LOAD JOBS
+===================================================== */
+
+function loadJobs() {
+
+    const jobs =
+        JSON.parse(
+            localStorage.getItem(
+                "recruiterJobs"
+            )
+        ) || [];
+
+
+    const jobsList =
+        document.getElementById(
+            "jobsList"
+        );
+
+
+    jobsList.innerHTML = "";
+
+
+    if (jobs.length === 0) {
+
+        jobsList.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    No Jobs Posted Yet
+                </h3>
+
+                <p>
+                    Click "Post New Job" to
+                    create your first job.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    jobs.forEach(function(job, index) {
+
+        const jobCard =
+            document.createElement(
+                "div"
+            );
+
+
+        jobCard.className =
+            "job-card";
+
+
+        jobCard.innerHTML = `
+
+            <h3>
+                💼 ${job.title}
+            </h3>
+
+            <p>
+                <strong>Company:</strong>
+                ${job.company}
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                ${job.location}
+            </p>
+
+            <p>
+                <strong>Job Type:</strong>
+                ${job.type}
+            </p>
+
+            <p>
+                <strong>Salary:</strong>
+                ${job.salary}
+            </p>
+
+            <p>
+                <strong>Skills:</strong>
+                ${job.skills}
+            </p>
+
+            <p>
+                <strong>Description:</strong>
+                ${job.description}
+            </p>
+
+            <button
+                class="delete-btn"
+                data-index="${index}"
+            >
+                Delete Job
+            </button>
+
+        `;
+
+
+        jobsList.appendChild(
+            jobCard
+        );
+
+    });
+
+
+    /* Delete buttons */
+
+    document
+        .querySelectorAll(".delete-btn")
+        .forEach(function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const index =
+                        Number(
+                            this.dataset.index
+                        );
+
+
+                    deleteJob(index);
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =====================================================
+   DELETE JOB
+===================================================== */
+
+function deleteJob(index) {
+
+    let jobs =
+        JSON.parse(
+            localStorage.getItem(
+                "recruiterJobs"
+            )
+        ) || [];
+
+
+    jobs.splice(index, 1);
+
+
+    localStorage.setItem(
+        "recruiterJobs",
+        JSON.stringify(jobs)
+    );
+
+
+    loadJobs();
+
+}
+
+
+/* =====================================================
+   CANDIDATE PROFILE
+===================================================== */
+
+document
+    .querySelectorAll(".profile-btn")
+    .forEach(function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                const name =
+                    this.dataset.name;
+
+                const email =
+                    this.dataset.email;
+
+                const role =
+                    this.dataset.role;
+
+
+                alert(
+
+                    "CANDIDATE PROFILE\n\n" +
+
+                    "Name: " +
+                    name +
+
+                    "\nEmail: " +
+                    email +
+
+                    "\nRole: " +
+                    role +
+
+                    "\nExperience: Fresher" +
+
+                    "\nEducation: B.Tech"
+
+                );
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   COMPANY PROFILE SAVE
+===================================================== */
+
+document
+    .getElementById("companyForm")
+    .addEventListener(
+        "submit",
+        function(e) {
+
+            e.preventDefault();
+
+
+            const company = {
+
+                name:
+                    document.getElementById(
+                        "companyName"
+                    ).value,
+
+                email:
+                    document.getElementById(
+                        "companyEmail"
+                    ).value,
+
+                phone:
+                    document.getElementById(
+                        "companyPhone"
+                    ).value,
+
+                location:
+                    document.getElementById(
+                        "companyLocation"
+                    ).value,
+
+                website:
+                    document.getElementById(
+                        "companyWebsite"
+                    ).value,
+
+                about:
+                    document.getElementById(
+                        "companyAbout"
+                    ).value
+
+            };
+
+
+            localStorage.setItem(
+                "companyProfile",
+                JSON.stringify(company)
+            );
+
+
+            const message =
+                document.getElementById(
+                    "companyMessage"
+                );
+
+
+            message.innerText =
+                "✅ Company profile saved successfully!";
+
+
+            message.style.color =
+                "green";
+
+        }
+    );
+
+
+/* =====================================================
+   LOAD COMPANY PROFILE
+===================================================== */
+
+function loadCompany() {
+
+    const company =
+        JSON.parse(
+            localStorage.getItem(
+                "companyProfile"
+            )
+        );
+
+
+    if (!company) {
+        return;
+    }
+
+
+    document.getElementById(
+        "companyName"
+    ).value =
+        company.name || "";
+
+
+    document.getElementById(
+        "companyEmail"
+    ).value =
+        company.email || "";
+
+
+    document.getElementById(
+        "companyPhone"
+    ).value =
+        company.phone || "";
+
+
+    document.getElementById(
+        "companyLocation"
+    ).value =
+        company.location || "";
+
+
+    document.getElementById(
+        "companyWebsite"
+    ).value =
+        company.website || "";
+
+
+    document.getElementById(
+        "companyAbout"
+    ).value =
+        company.about || "";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click", function() {
+
+        localStorage.removeItem(
+            "loggedIn"
+        );
+
+        localStorage.removeItem(
+            "userEmail"
+        );
+
+        localStorage.removeItem(
+            "userRole"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+    });
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadJobs();
+
+loadCompany();
+
+</script>
+
+</body>
+
+</html>

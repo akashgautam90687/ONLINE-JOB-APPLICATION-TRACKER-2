@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Job Seeker Dashboard</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f7fb;
+            color: #111827;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+
+            height: 88px;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 0 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+        }
+
+
+        .navbar h2 {
+            font-size: 30px;
+        }
+
+
+        .logout-btn {
+
+            background: #ef4444;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+        }
+
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main {
+
+            padding: 50px 30px;
+
+        }
+
+
+        /* ================= WELCOME ================= */
+
+        .welcome h1 {
+
+            font-size: 40px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .welcome p {
+
+            font-size: 19px;
+
+        }
+
+
+        /* ================= DASHBOARD ================= */
+
+        .dashboard-cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(220px, 1fr));
+
+            gap: 24px;
+
+            margin-top: 40px;
+
+        }
+
+
+        .card {
+
+            background: white;
+
+            min-height: 200px;
+
+            padding: 32px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 7px 20px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        .card h2 {
+
+            font-size: 29px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .card p {
+
+            font-size: 17px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .card-btn {
+
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+        }
+
+
+        .card-btn:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* ================= SECTIONS ================= */
+
+        .page-section {
+
+            display: none;
+
+            background: white;
+
+            margin-top: 40px;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 7px 20px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        .page-section.active {
+
+            display: block;
+
+        }
+
+
+        .page-section h2 {
+
+            font-size: 32px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* ================= BACK ================= */
+
+        .back-btn {
+
+            background: #6b7280;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 18px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .search-box input {
+
+            flex: 1;
+
+            padding: 14px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+        }
+
+
+        .search-btn {
+
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 14px 22px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* ================= JOB CARD ================= */
+
+        .job-card {
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .job-card h3 {
+
+            font-size: 23px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .job-card p {
+
+            margin: 7px 0;
+
+            color: #4b5563;
+
+        }
+
+
+        .job-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .apply-btn {
+
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 17px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+        }
+
+
+        .save-btn {
+
+            background: #ec4899;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 17px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+        }
+
+
+        .remove-btn {
+
+            background: #ef4444;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 17px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* ================= APPLICATION ================= */
+
+        .application-card {
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            padding: 22px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 7px 12px;
+
+            background: #fef3c7;
+
+            color: #92400e;
+
+            border-radius: 20px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* ================= PROFILE ================= */
+
+        .form-container {
+
+            max-width: 800px;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .form-group input,
+
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+        }
+
+
+        .form-group textarea {
+
+            height: 120px;
+
+            resize: vertical;
+
+        }
+
+
+        .submit-btn {
+
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px 24px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+        }
+
+
+        .message {
+
+            margin-top: 15px;
+
+            font-weight: bold;
+
+        }
+
+
+        .empty {
+
+            padding: 25px;
+
+            text-align: center;
+
+            border: 1px dashed #cbd5e1;
+
+            border-radius: 10px;
+
+            color: #6b7280;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width:1100px) {
+
+            .dashboard-cards {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+            }
+
+        }
+
+
+        @media(max-width:650px) {
+
+            .dashboard-cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .navbar h2 {
+
+                font-size: 22px;
+
+            }
+
+            .main {
+
+                padding: 30px 18px;
+
+            }
+
+            .welcome h1 {
+
+                font-size: 30px;
+
+            }
+
+            .search-box {
+
+                flex-direction: column;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <h2>
+        Job Seeker
+    </h2>
+
+    <button
+        class="logout-btn"
+        id="logoutBtn"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+
+<main class="main">
+
+
+<!-- =====================================================
+     WELCOME
+===================================================== -->
+
+<div class="welcome">
+
+    <h1>
+        Welcome, Job Seeker 👋
+    </h1>
+
+    <p>
+        Manage your job applications from here.
+    </p>
+
+</div>
+
+
+
+<!-- =====================================================
+     DASHBOARD CARDS
+===================================================== -->
+
+<div
+    class="dashboard-cards"
+    id="dashboardCards"
+>
+
+
+    <!-- FIND JOBS -->
+
+    <div class="card">
+
+        <h2>
+            🔍 Find Jobs
+        </h2>
+
+        <p>
+            Search for new job opportunities.
+        </p>
+
+        <button
+            class="card-btn"
+            id="findJobsBtn"
+        >
+            Search Jobs
+        </button>
+
+    </div>
+
+
+
+    <!-- APPLICATIONS -->
+
+    <div class="card">
+
+        <h2>
+            📋 My Applications
+        </h2>
+
+        <p>
+            Track your submitted applications.
+        </p>
+
+        <button
+            class="card-btn"
+            id="applicationsBtn"
+        >
+            View Applications
+        </button>
+
+    </div>
+
+
+
+    <!-- SAVED JOBS -->
+
+    <div class="card">
+
+        <h2>
+            ❤️ Saved Jobs
+        </h2>
+
+        <p>
+            View your saved jobs.
+        </p>
+
+        <button
+            class="card-btn"
+            id="savedJobsBtn"
+        >
+            Saved Jobs
+        </button>
+
+    </div>
+
+
+
+    <!-- PROFILE -->
+
+    <div class="card">
+
+        <h2>
+            👤 Profile
+        </h2>
+
+        <p>
+            Update your profile and resume.
+        </p>
+
+        <button
+            class="card-btn"
+            id="profileBtn"
+        >
+            My Profile
+        </button>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FIND JOBS
+===================================================== -->
+
+<section
+    class="page-section"
+    id="findJobsSection"
+>
+
+
+    <button
+        class="back-btn"
+        id="backFromJobs"
+    >
+        ← Back to Dashboard
+    </button>
+
+
+    <h2>
+        🔍 Find Jobs
+    </h2>
+
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by job title, company or skill..."
+        >
+
+        <button
+            class="search-btn"
+            id="searchBtn"
+        >
+            Search
+        </button>
+
+    </div>
+
+
+    <div id="jobsList"></div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     MY APPLICATIONS
+===================================================== -->
+
+<section
+    class="page-section"
+    id="applicationsSection"
+>
+
+
+    <button
+        class="back-btn"
+        id="backFromApplications"
+    >
+        ← Back to Dashboard
+    </button>
+
+
+    <h2>
+        📋 My Applications
+    </h2>
+
+
+    <div id="applicationsList"></div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     SAVED JOBS
+===================================================== -->
+
+<section
+    class="page-section"
+    id="savedJobsSection"
+>
+
+
+    <button
+        class="back-btn"
+        id="backFromSaved"
+    >
+        ← Back to Dashboard
+    </button>
+
+
+    <h2>
+        ❤️ Saved Jobs
+    </h2>
+
+
+    <div id="savedJobsList"></div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<section
+    class="page-section"
+    id="profileSection"
+>
+
+
+    <button
+        class="back-btn"
+        id="backFromProfile"
+    >
+        ← Back to Dashboard
+    </button>
+
+
+    <h2>
+        👤 My Profile
+    </h2>
+
+
+    <div class="form-container">
+
+
+        <form id="profileForm">
+
+
+            <div class="form-group">
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="fullName"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Mobile Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter mobile number"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Education
+                </label>
+
+                <input
+                    type="text"
+                    id="education"
+                    placeholder="e.g. B.Tech CSE"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Skills
+                </label>
+
+                <input
+                    type="text"
+                    id="skills"
+                    placeholder="e.g. HTML, CSS, JavaScript"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Experience
+                </label>
+
+                <input
+                    type="text"
+                    id="experience"
+                    placeholder="e.g. Fresher"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Resume Link
+                </label>
+
+                <input
+                    type="text"
+                    id="resume"
+                    placeholder="Paste resume link"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    About Me
+                </label>
+
+                <textarea
+                    id="about"
+                    placeholder="Write something about yourself..."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                class="submit-btn"
+                type="submit"
+            >
+                Save Profile
+            </button>
+
+
+        </form>
+
+
+        <p
+            class="message"
+            id="profileMessage"
+        ></p>
+
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   LOGIN CHECK
+===================================================== */
+
+const loggedIn =
+    localStorage.getItem("loggedIn");
+
+const userRole =
+    localStorage.getItem("userRole");
+
+
+if (
+    loggedIn !== "true" ||
+    userRole !== "jobseeker"
+) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const dashboard =
+    document.getElementById(
+        "dashboardCards"
+    );
+
+
+const findJobsSection =
+    document.getElementById(
+        "findJobsSection"
+    );
+
+
+const applicationsSection =
+    document.getElementById(
+        "applicationsSection"
+    );
+
+
+const savedJobsSection =
+    document.getElementById(
+        "savedJobsSection"
+    );
+
+
+const profileSection =
+    document.getElementById(
+        "profileSection"
+    );
+
+
+
+/* =====================================================
+   HIDE SECTIONS
+===================================================== */
+
+function hideSections() {
+
+    findJobsSection.classList.remove(
+        "active"
+    );
+
+    applicationsSection.classList.remove(
+        "active"
+    );
+
+    savedJobsSection.classList.remove(
+        "active"
+    );
+
+    profileSection.classList.remove(
+        "active"
+    );
+
+}
+
+
+
+/* =====================================================
+   BACK TO DASHBOARD
+===================================================== */
+
+function showDashboard() {
+
+    hideSections();
+
+    dashboard.style.display =
+        "grid";
+
+}
+
+
+
+/* =====================================================
+   FIND JOBS
+===================================================== */
+
+document
+    .getElementById("findJobsBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            dashboard.style.display =
+                "none";
+
+            hideSections();
+
+            findJobsSection.classList.add(
+                "active"
+            );
+
+            loadJobs();
+
+        }
+    );
+
+
+
+/* =====================================================
+   APPLICATIONS
+===================================================== */
+
+document
+    .getElementById("applicationsBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            dashboard.style.display =
+                "none";
+
+            hideSections();
+
+            applicationsSection.classList.add(
+                "active"
+            );
+
+            loadApplications();
+
+        }
+    );
+
+
+
+/* =====================================================
+   SAVED JOBS
+===================================================== */
+
+document
+    .getElementById("savedJobsBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            dashboard.style.display =
+                "none";
+
+            hideSections();
+
+            savedJobsSection.classList.add(
+                "active"
+            );
+
+            loadSavedJobs();
+
+        }
+    );
+
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+document
+    .getElementById("profileBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            dashboard.style.display =
+                "none";
+
+            hideSections();
+
+            profileSection.classList.add(
+                "active"
+            );
+
+            loadProfile();
+
+        }
+    );
+
+
+
+/* =====================================================
+   BACK BUTTONS
+===================================================== */
+
+document
+    .getElementById("backFromJobs")
+    .addEventListener(
+        "click",
+        showDashboard
+    );
+
+
+document
+    .getElementById("backFromApplications")
+    .addEventListener(
+        "click",
+        showDashboard
+    );
+
+
+document
+    .getElementById("backFromSaved")
+    .addEventListener(
+        "click",
+        showDashboard
+    );
+
+
+document
+    .getElementById("backFromProfile")
+    .addEventListener(
+        "click",
+        showDashboard
+    );
+
+
+
+/* =====================================================
+   GET RECRUITER JOBS
+===================================================== */
+
+function getJobs() {
+
+    let jobs =
+        JSON.parse(
+            localStorage.getItem(
+                "recruiterJobs"
+            )
+        ) || [];
+
+
+    /*
+       If recruiter has not posted
+       any jobs, show demo jobs.
+    */
+
+    if (jobs.length === 0) {
+
+        jobs = [
+
+            {
+                title:
+                    "Frontend Developer",
+
+                company:
+                    "Tech Solutions",
+
+                location:
+                    "Hyderabad",
+
+                type:
+                    "Full Time",
+
+                salary:
+                    "₹6 - ₹10 LPA",
+
+                skills:
+                    "HTML, CSS, JavaScript",
+
+                description:
+                    "Looking for a frontend developer."
+            },
+
+
+            {
+                title:
+                    "Java Developer",
+
+                company:
+                    "ABC Technologies",
+
+                location:
+                    "Bangalore",
+
+                type:
+                    "Full Time",
+
+                salary:
+                    "₹7 - ₹12 LPA",
+
+                skills:
+                    "Java, Spring Boot, SQL",
+
+                description:
+                    "Looking for a Java developer."
+            },
+
+
+            {
+                title:
+                    "Web Development Intern",
+
+                company:
+                    "Startup India",
+
+                location:
+                    "Remote",
+
+                type:
+                    "Internship",
+
+                salary:
+                    "₹15,000/month",
+
+                skills:
+                    "HTML, CSS, JavaScript",
+
+                description:
+                    "Frontend internship opportunity."
+            }
+
+        ];
+
+    }
+
+
+    return jobs;
+
+}
+
+
+
+/* =====================================================
+   LOAD JOBS
+===================================================== */
+
+function loadJobs(
+    searchText = ""
+) {
+
+    const jobsList =
+        document.getElementById(
+            "jobsList"
+        );
+
+
+    const jobs =
+        getJobs();
+
+
+    const search =
+        searchText
+            .toLowerCase()
+            .trim();
+
+
+    const filteredJobs =
+        jobs.filter(function(job) {
+
+            return (
+
+                job.title
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                job.company
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                job.skills
+                    .toLowerCase()
+                    .includes(search)
+
+            );
+
+        });
+
+
+    jobsList.innerHTML = "";
+
+
+
+    if (filteredJobs.length === 0) {
+
+        jobsList.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    No Jobs Found
+                </h3>
+
+                <p>
+                    Try another search.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    filteredJobs.forEach(
+        function(job, index) {
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "job-card";
+
+
+            card.innerHTML = `
+
+                <h3>
+                    💼 ${job.title}
+                </h3>
+
+                <p>
+                    <strong>
+                        Company:
+                    </strong>
+                    ${job.company}
+                </p>
+
+                <p>
+                    <strong>
+                        Location:
+                    </strong>
+                    ${job.location}
+                </p>
+
+                <p>
+                    <strong>
+                        Job Type:
+                    </strong>
+                    ${job.type}
+                </p>
+
+                <p>
+                    <strong>
+                        Salary:
+                    </strong>
+                    ${job.salary}
+                </p>
+
+                <p>
+                    <strong>
+                        Skills:
+                    </strong>
+                    ${job.skills}
+                </p>
+
+                <p>
+                    <strong>
+                        Description:
+                    </strong>
+                    ${job.description}
+                </p>
+
+
+                <div class="job-actions">
+
+                    <button
+                        class="apply-btn"
+                        onclick="applyJob(${index})"
+                    >
+                        Apply Now
+                    </button>
+
+
+                    <button
+                        class="save-btn"
+                        onclick="saveJob(${index})"
+                    >
+                        ❤️ Save Job
+                    </button>
+
+                </div>
+
+            `;
+
+
+            jobsList.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   SEARCH BUTTON
+===================================================== */
+
+document
+    .getElementById("searchBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            const text =
+                document.getElementById(
+                    "searchInput"
+                ).value;
+
+
+            loadJobs(text);
+
+        }
+    );
+
+
+
+/* =====================================================
+   SEARCH ENTER KEY
+===================================================== */
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "keyup",
+        function(e) {
+
+            if (
+                e.key === "Enter"
+            ) {
+
+                loadJobs(
+                    this.value
+                );
+
+            }
+
+        }
+    );
+
+
+
+/* =====================================================
+   APPLY JOB
+===================================================== */
+
+function applyJob(index) {
+
+    const jobs =
+        getJobs();
+
+
+    const job =
+        jobs[index];
+
+
+    let applications =
+        JSON.parse(
+            localStorage.getItem(
+                "jobApplications"
+            )
+        ) || [];
+
+
+    /*
+       Check duplicate application
+    */
+
+    const alreadyApplied =
+        applications.some(
+            function(application) {
+
+                return (
+                    application.title ===
+                    job.title
+                    &&
+                    application.company ===
+                    job.company
+                );
+
+            }
+        );
+
+
+    if (alreadyApplied) {
+
+        alert(
+            "You have already applied for this job."
+        );
+
+        return;
+
+    }
+
+
+
+    applications.push({
+
+        title:
+            job.title,
+
+        company:
+            job.company,
+
+        location:
+            job.location,
+
+        salary:
+            job.salary,
+
+        status:
+            "Application Submitted"
+
+    });
+
+
+    localStorage.setItem(
+        "jobApplications",
+        JSON.stringify(
+            applications
+        )
+    );
+
+
+    alert(
+        "✅ Application submitted successfully!"
+    );
+
+
+    loadJobs();
+
+}
+
+
+
+/* =====================================================
+   SAVE JOB
+===================================================== */
+
+function saveJob(index) {
+
+    const jobs =
+        getJobs();
+
+
+    const job =
+        jobs[index];
+
+
+    let savedJobs =
+        JSON.parse(
+            localStorage.getItem(
+                "savedJobs"
+            )
+        ) || [];
+
+
+    const alreadySaved =
+        savedJobs.some(
+            function(saved) {
+
+                return (
+                    saved.title ===
+                    job.title
+                    &&
+                    saved.company ===
+                    job.company
+                );
+
+            }
+        );
+
+
+    if (alreadySaved) {
+
+        alert(
+            "This job is already saved."
+        );
+
+        return;
+
+    }
+
+
+    savedJobs.push(job);
+
+
+    localStorage.setItem(
+        "savedJobs",
+        JSON.stringify(
+            savedJobs
+        )
+    );
+
+
+    alert(
+        "❤️ Job saved successfully!"
+    );
+
+}
+
+
+
+/* =====================================================
+   LOAD APPLICATIONS
+===================================================== */
+
+function loadApplications() {
+
+    const list =
+        document.getElementById(
+            "applicationsList"
+        );
+
+
+    const applications =
+        JSON.parse(
+            localStorage.getItem(
+                "jobApplications"
+            )
+        ) || [];
+
+
+    list.innerHTML = "";
+
+
+    if (
+        applications.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    No Applications Yet
+                </h3>
+
+                <p>
+                    Apply for jobs from
+                    Find Jobs.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    applications.forEach(
+        function(application) {
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "application-card";
+
+
+            card.innerHTML = `
+
+                <h3>
+                    💼 ${application.title}
+                </h3>
+
+                <p>
+                    <strong>
+                        Company:
+                    </strong>
+                    ${application.company}
+                </p>
+
+                <p>
+                    <strong>
+                        Location:
+                    </strong>
+                    ${application.location}
+                </p>
+
+                <p>
+                    <strong>
+                        Salary:
+                    </strong>
+                    ${application.salary}
+                </p>
+
+                <span class="status">
+                    ${application.status}
+                </span>
+
+            `;
+
+
+            list.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   LOAD SAVED JOBS
+===================================================== */
+
+function loadSavedJobs() {
+
+    const list =
+        document.getElementById(
+            "savedJobsList"
+        );
+
+
+    const savedJobs =
+        JSON.parse(
+            localStorage.getItem(
+                "savedJobs"
+            )
+        ) || [];
+
+
+    list.innerHTML = "";
+
+
+    if (
+        savedJobs.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    No Saved Jobs
+                </h3>
+
+                <p>
+                    Save jobs from Find Jobs.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    savedJobs.forEach(
+        function(job, index) {
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "job-card";
+
+
+            card.innerHTML = `
+
+                <h3>
+                    💼 ${job.title}
+                </h3>
+
+                <p>
+                    <strong>
+                        Company:
+                    </strong>
+                    ${job.company}
+                </p>
+
+                <p>
+                    <strong>
+                        Location:
+                    </strong>
+                    ${job.location}
+                </p>
+
+                <p>
+                    <strong>
+                        Salary:
+                    </strong>
+                    ${job.salary}
+                </p>
+
+                <p>
+                    <strong>
+                        Skills:
+                    </strong>
+                    ${job.skills}
+                </p>
+
+
+                <div class="job-actions">
+
+                    <button
+                        class="apply-btn"
+                        onclick="applySavedJob(${index})"
+                    >
+                        Apply Now
+                    </button>
+
+
+                    <button
+                        class="remove-btn"
+                        onclick="removeSavedJob(${index})"
+                    >
+                        Remove
+                    </button>
+
+                </div>
+
+            `;
+
+
+            list.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   APPLY SAVED JOB
+===================================================== */
+
+function applySavedJob(index) {
+
+    const savedJobs =
+        JSON.parse(
+            localStorage.getItem(
+                "savedJobs"
+            )
+        ) || [];
+
+
+    const job =
+        savedJobs[index];
+
+
+    let applications =
+        JSON.parse(
+            localStorage.getItem(
+                "jobApplications"
+            )
+        ) || [];
+
+
+    const alreadyApplied =
+        applications.some(
+            function(application) {
+
+                return (
+                    application.title ===
+                    job.title
+                    &&
+                    application.company ===
+                    job.company
+                );
+
+            }
+        );
+
+
+    if (alreadyApplied) {
+
+        alert(
+            "You have already applied for this job."
+        );
+
+        return;
+
+    }
+
+
+    applications.push({
+
+        title:
+            job.title,
+
+        company:
+            job.company,
+
+        location:
+            job.location,
+
+        salary:
+            job.salary,
+
+        status:
+            "Application Submitted"
+
+    });
+
+
+    localStorage.setItem(
+        "jobApplications",
+        JSON.stringify(
+            applications
+        )
+    );
+
+
+    alert(
+        "✅ Application submitted successfully!"
+    );
+
+
+    loadSavedJobs();
+
+}
+
+
+
+/* =====================================================
+   REMOVE SAVED JOB
+===================================================== */
+
+function removeSavedJob(index) {
+
+    let savedJobs =
+        JSON.parse(
+            localStorage.getItem(
+                "savedJobs"
+            )
+        ) || [];
+
+
+    savedJobs.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "savedJobs",
+        JSON.stringify(
+            savedJobs
+        )
+    );
+
+
+    loadSavedJobs();
+
+}
+
+
+
+/* =====================================================
+   SAVE PROFILE
+===================================================== */
+
+document
+    .getElementById("profileForm")
+    .addEventListener(
+        "submit",
+        function(e) {
+
+            e.preventDefault();
+
+
+            const profile = {
+
+                fullName:
+                    document.getElementById(
+                        "fullName"
+                    ).value,
+
+                email:
+                    document.getElementById(
+                        "email"
+                    ).value,
+
+                phone:
+                    document.getElementById(
+                        "phone"
+                    ).value,
+
+                education:
+                    document.getElementById(
+                        "education"
+                    ).value,
+
+                skills:
+                    document.getElementById(
+                        "skills"
+                    ).value,
+
+                experience:
+                    document.getElementById(
+                        "experience"
+                    ).value,
+
+                resume:
+                    document.getElementById(
+                        "resume"
+                    ).value,
+
+                about:
+                    document.getElementById(
+                        "about"
+                    ).value
+
+            };
+
+
+            localStorage.setItem(
+                "jobSeekerProfile",
+                JSON.stringify(
+                    profile
+                )
+            );
+
+
+            const message =
+                document.getElementById(
+                    "profileMessage"
+                );
+
+
+            message.innerText =
+                "✅ Profile saved successfully!";
+
+
+            message.style.color =
+                "green";
+
+        }
+    );
+
+
+
+/* =====================================================
+   LOAD PROFILE
+===================================================== */
+
+function loadProfile() {
+
+    const profile =
+        JSON.parse(
+            localStorage.getItem(
+                "jobSeekerProfile"
+            )
+        );
+
+
+    if (!profile) {
+
+        const loginEmail =
+            localStorage.getItem(
+                "userEmail"
+            );
+
+
+        if (loginEmail) {
+
+            document.getElementById(
+                "email"
+            ).value =
+                loginEmail;
+
+        }
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "fullName"
+    ).value =
+        profile.fullName || "";
+
+
+    document.getElementById(
+        "email"
+    ).value =
+        profile.email || "";
+
+
+    document.getElementById(
+        "phone"
+    ).value =
+        profile.phone || "";
+
+
+    document.getElementById(
+        "education"
+    ).value =
+        profile.education || "";
+
+
+    document.getElementById(
+        "skills"
+    ).value =
+        profile.skills || "";
+
+
+    document.getElementById(
+        "experience"
+    ).value =
+        profile.experience || "";
+
+
+    document.getElementById(
+        "resume"
+    ).value =
+        profile.resume || "";
+
+
+    document.getElementById(
+        "about"
+    ).value =
+        profile.about || "";
+
+}
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            localStorage.removeItem(
+                "loggedIn"
+            );
+
+            localStorage.removeItem(
+                "userEmail"
+            );
+
+            localStorage.removeItem(
+                "userRole"
+            );
+
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>

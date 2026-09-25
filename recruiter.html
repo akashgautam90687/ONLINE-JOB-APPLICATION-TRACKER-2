@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recruiter Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+        }
+
+        nav {
+            background: #111827;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard {
+            padding: 40px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+        }
+
+        .card button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            background: #111827;
+            color: white;
+            cursor: pointer;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <h2>Recruiter Dashboard</h2>
+        <button class="logout" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="dashboard">
+
+        <h1>Welcome, Recruiter 👋</h1>
+        <p>Manage your jobs and candidates from here.</p>
+
+        <div class="cards">
+
+            <div class="card">
+                <h2>➕ Post Job</h2>
+                <p>Create a new job vacancy.</p>
+                <button>Post New Job</button>
+            </div>
+
+            <div class="card">
+                <h2>💼 My Jobs</h2>
+                <p>Manage your posted jobs.</p>
+                <button>View Jobs</button>
+            </div>
+
+            <div class="card">
+                <h2>👥 Candidates</h2>
+                <p>View candidates who applied.</p>
+                <button>View Candidates</button>
+            </div>
+
+            <div class="card">
+                <h2>🏢 Company Profile</h2>
+                <p>Manage your company information.</p>
+                <button>My Company</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        // Protect dashboard
+        if (localStorage.getItem("loggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("userEmail");
+            localStorage.removeItem("userRole");
+
+            window.location.href = "login.html";
+        }
+
+    </script>
+
+</body>
+</html>
